@@ -12,7 +12,6 @@ setup(
 
     install_requires=[
         'Flask',
-        'Flask-Login',
     ],
 
     classifiers=[

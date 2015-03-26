@@ -7,12 +7,12 @@ from urllib import urlencode
 
 import flask
 from flask import request, current_app
-from flask.ext.login import current_user
 import werkzeug as wz
 
 from flask_acl.core import iter_object_acl, get_object_context, check
 from flask_acl.permission import default_permission_sets
 from flask_acl.predicate import default_predicates
+from flask_acl.globals import current_user
 
 
 log = logging.getLogger(__name__)
@@ -81,7 +81,7 @@ class ACLManager(object):
         """Decorator to attach an ACL to a route.
 
         E.g::
-        
+
             @app.route('/url/to/view')
             @authz.route_acl('''
                 ALLOW WHEEL ALL
@@ -98,7 +98,7 @@ class ACLManager(object):
 
             @functools.wraps(func)
             def wrapped(*args, **kwargs):
-                permission = 'http.' + request.method.lower()
+                permission = current_user.get_permissions()
                 local_opts = options.copy()
                 local_opts.setdefault('default', current_app.config['ACL_ROUTE_DEFAULT_STATE'])
                 self.assert_can(permission, func, **local_opts)

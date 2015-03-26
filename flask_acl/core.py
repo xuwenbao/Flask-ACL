@@ -33,7 +33,6 @@ def parse_acl(acl_iter):
                 yield parse_state(state), parse_predicate(predicate), permission_set
 
 
-
 def iter_object_graph(obj, parents_first=False):
 
     if not parents_first:
@@ -70,9 +69,6 @@ def get_object_context(root):
     for obj in iter_object_graph(root, parents_first=True):
         context.update(getattr(obj, '__acl_context__', {}))
     return context
-
-
-
 
 
 def check(permission, raw_acl, **context):

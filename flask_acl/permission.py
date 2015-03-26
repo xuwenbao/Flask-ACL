@@ -10,7 +10,7 @@ class All(object):
     def __repr__(self):
         return 'ALL'
 
-   
+
 default_permission_sets = {
     'ALL': All(),
     'http.get': set(('http.get', 'http.head', 'http.options')),
@@ -24,11 +24,9 @@ def parse_permission_set(input):
 
     """
     if isinstance(input, basestring):
-        try:
+        if input in current_acl_manager.permission_sets:
             return current_acl_manager.permission_sets[input]
-        except KeyError:
-            raise ValueError('unknown permission set %r' % input)
-    return input
+        return input
 
 
 def is_permission_in_set(perm, perm_set):
@@ -44,7 +42,7 @@ def is_permission_in_set(perm, perm_set):
     if isinstance(perm_set, basestring):
         return perm == perm_set
     elif isinstance(perm_set, Container):
-        return perm in perm_set
+        return perm_set in perm
     elif isinstance(perm_set, Callable):
         return perm_set(perm)
     else:
