@@ -22,5 +22,6 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 2',
     ],
+    packages=['flask_acl'],
     
 )
