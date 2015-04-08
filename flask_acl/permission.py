@@ -40,9 +40,10 @@ def is_permission_in_set(perm, perm_set):
     """
 
     if isinstance(perm_set, basestring):
-        return perm == perm_set
-    elif isinstance(perm_set, Container):
-        return perm_set in perm
+        perm_set = {perm_set}
+
+    if isinstance(perm_set, Container):
+        return perm_set.issubset(perm)
     elif isinstance(perm_set, Callable):
         return perm_set(perm)
     else:
